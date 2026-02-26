@@ -1,0 +1,37 @@
+{
+  "templeOf": "The temple of",
+  "explore": "Explore",
+  "about": "About",
+  "disciplines": "Disciplines",
+  "work": "Work",
+  "manifesto": "Manifesto",
+  "architecture": "Architecture",
+  "contact": "Contact",
+  "building": "Building",
+  "scroll": "SCROLL",
+
+  "coder": "Coder",
+  "developer": "Developer",
+  "activist": "Activist",
+
+  "aboutIntro1": "I build at the intersection of ",
+  "aboutIntro1Tech": "technology",
+  "aboutIntro1Creativity": "creativity",
+  "aboutIntro1End": ". Crafting digital experiences that challenge convention and push the boundaries of what the web can be.",
+  "aboutIntro2": "I approach every project as a multidimensional canvas. Whether shipping production systems, or advocating for systemic change, the throughline is always the same: purposeful creation that propels the world forward.",
+
+  "statsYearsCreating": "Years creating",
+  "statsProjects": "Projects shipped",
+  "statsDisciplines": "Disciplines",
+  "statsReach": "Reach",
+
+  "contactHeaderLine1": "Let's create",
+  "contactHeaderLine2": "something",
+  "contactHeaderLine3": "extraordinary.",
+  "contactFollow": "Follow on Instagram or chat via WhatsApp:",
+  "contactParagraph": "Open to collaboration, commissions, and conversations about technology, art, music, and social justice. Based everywhere, building for everyone.",
+
+  "backToTop": "BACK TO TOP",
+  "copyright": "QUETZALCOUTL © 2026",
+  "crafted": "Crafted with intention. Built with code."
+}
