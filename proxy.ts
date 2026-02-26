@@ -1,31 +1,29 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
-// redirect users based on geo location to pt or en locale
+// detect user locale via geo and expose it in a header/cookie
 export function proxy(req: NextRequest) {
-  const { geo, nextUrl } = req;
+  const { geo } = req;
 
-  // skip api/_next and static files
-  if (nextUrl.pathname.startsWith('/_next') || nextUrl.pathname.startsWith('/api')) {
+  // always allow next internal routes through unchanged
+  const { pathname } = req.nextUrl;
+  if (pathname.startsWith('/_next') || pathname.startsWith('/api')) {
     return NextResponse.next();
   }
 
-  // if the path already contains a locale segment, let Next handle it
-  if (nextUrl.locale) {
-    return NextResponse.next();
-  }
-
-  // default locale
-  let locale: string = 'en';
+  // determine locale (default en)
+  let locale = 'en';
   const country = geo?.country?.toUpperCase() || '';
   if (country === 'BR' || country === 'PT') {
     locale = 'pt';
   }
 
-  // rewrite to the correct locale prefix without changing the URL in the browser
-  const url = nextUrl.clone();
-  url.pathname = `/${locale}${nextUrl.pathname}`;
-  return NextResponse.rewrite(url);
+  const res = NextResponse.next();
+  // add header for server components
+  res.headers.set('x-locale', locale);
+  // also set a cookie so client UI can read it
+  res.cookies.set('NEXT_LOCALE', locale, { path: '/' });
+  return res;
 }
 
 export const config = {

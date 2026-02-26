@@ -13,13 +13,28 @@ export function t(key: string, locale: Locale = "en") {
   return translations[locale]?.[key] ?? translations.en[key] ?? key;
 }
 
-// hook for client components
-import { useRouter } from "next/navigation";
-import { useMemo } from "react";
+// hook for client components - determine locale from cookie set by proxy
+import { useEffect, useState, useMemo } from "react";
+
+function readLocaleFromCookie(): Locale {
+  const match = document.cookie.match(/(?:^|;\s*)NEXT_LOCALE=(pt|en)/);
+  return (match ? (match[1] as Locale) : "en");
+}
 
 export function useTranslations() {
-  const { locale } = useRouter();
-  const loc = (locale as Locale) || "en";
+  // start with value injected by server, if available, otherwise default
+  const initial =
+    typeof window !== "undefined" && (window as any).__LOCALE__ ? (window as any).__LOCALE__ : "en";
+
+  const [loc, setLoc] = useState<Locale>(initial as Locale);
+
+  useEffect(() => {
+    const fromCookie = readLocaleFromCookie();
+    if (fromCookie !== loc) {
+      setLoc(fromCookie);
+    }
+  }, []);
+
   return useMemo(() => {
     return {
       t: (key: string) => t(key, loc),

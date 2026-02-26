@@ -42,11 +42,17 @@ export default async function RootLayout({
 }>) {
   // headers() returns a Promise in app router; await before accessing
   const headersList = await headers();
-  const locale = headersList.get('x-nextjs-locale') || 'en';
+  const locale = headersList.get('x-locale') || 'en';
 
   return (
     <html lang={locale} className={`${_geist.variable} ${_geistMono.variable}`}>
       <body className="font-sans antialiased bg-background text-foreground overflow-x-hidden">
+        {/* expose locale to client code to avoid flash */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `window.__LOCALE__ = "${locale}";`,
+          }}
+        />
         {children}
         <div className="noise-overlay" aria-hidden="true" />
         <Analytics />
